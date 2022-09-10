@@ -1,14 +1,5 @@
 class Game {
-    constColorShader = null;
-    redSq            = null;
-    whiteSq          = null;
-
     constructor(htmlCanvasID) {
-        this.constColorShader = null;
-        this.whiteSq          = null;
-        this.redSq            = null;
-        this.camera           = null;
-
         Engine.Core.initializeWebGL(htmlCanvasID);
 
         this.initialize();

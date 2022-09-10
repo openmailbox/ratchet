@@ -1,7 +1,7 @@
 class Transform {
-    position = null;
-    rotation = null;
-    scale    = null;
+    position = [0.0, 0.0];
+    rotation = 0.0;
+    scale    = [1.0, 1.0];
 
     constructor() {
         this.position = glMatrix.vec2.fromValues(0, 0);
@@ -23,10 +23,16 @@ class Transform {
 
     get y() { return this.position[1]; }
 
+    /**
+     * @return {number} Rotation in degrees.
+     */
     getRotationDegrees() {
         return this.rotation * (180.0 / Math.PI);
     }
 
+    /**
+     * @return {number[]} The underlying transform matrix.
+     */
     getXform() {
         const matrix = glMatrix.mat4.create();
 
@@ -37,15 +43,25 @@ class Transform {
         return matrix;
     }
 
+    /**
+     * @param {number} x
+     * @param {number} y
+     */
     setPosition(x, y) {
         this.position[0] = x;
         this.position[1] = y;
     }
 
+    /**
+     * @param {number} degrees
+     */
     setRotationDegrees(degrees) {
         this.setRotationRads(degrees * Math.PI / 180.0);
     }
 
+    /**
+     * @param {number} radians
+     */
     setRotationRads(radians) {
         this.rotation = radians;
 
@@ -54,6 +70,10 @@ class Transform {
         }
     }
 
+    /**
+     * @param {number} width
+     * @param {number} height
+     */
     setSize(width, height) {
         this.scale[0] = width;
         this.scale[1] = height;

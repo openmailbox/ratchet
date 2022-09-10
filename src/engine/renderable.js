@@ -1,15 +1,16 @@
+/**
+ * @property {SimpleShader} shader
+ */
 class Renderable {
-    color     = null;
+    color     = [1, 1, 1, 1];
     shader    = null;
-    transform = null;
+    transform = new Transform();
 
     /**
      * @param {SimpleShader} shader
      */
     constructor(shader) {
-        this.color     = [1, 1, 1, 1];
-        this.shader    = shader;
-        this.transform = new Transform();
+        this.shader = shader;
     }
 
     get color() {
