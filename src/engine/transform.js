@@ -9,6 +9,24 @@ class Transform {
         this.scale    = glMatrix.vec2.fromValues(1, 1);
     }
 
+    get height() { return this.scale[1]; }
+
+    get position() { return this.position; }
+
+    get rotation() { return this.rotation; }
+
+    get scale() { return this.scale; }
+
+    get width() { return this.scale[0]; }
+
+    get x() { return this.position[0]; }
+
+    get y() { return this.position[1]; }
+
+    getRotationDegrees() {
+        return this.rotation * (180.0 / Math.PI);
+    }
+
     getXform() {
         const matrix = glMatrix.mat4.create();
 
@@ -18,12 +36,6 @@ class Transform {
 
         return matrix;
     }
-
-    get position() { return this.position; }
-
-    get rotation() { return this.rotation; }
-
-    get scale() { return this.scale; }
 
     setPosition(x, y) {
         this.position[0] = x;
