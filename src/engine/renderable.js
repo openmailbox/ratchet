@@ -1,17 +1,23 @@
 class Renderable {
-    color  = [1, 1, 1, 1];
-    shader = null;
+    color     = null;
+    shader    = null;
+    transform = null;
 
     /**
      * @param {SimpleShader} shader
      */
     constructor(shader) {
-        this.shader = shader;
-        this.color  = [1, 1, 1, 1];
+        this.color     = [1, 1, 1, 1];
+        this.shader    = shader;
+        this.transform = new Transform();
     }
 
     get color() {
         return this._color;
+    }
+
+    get transform() {
+        return this.transform;
     }
 
     /**
@@ -21,10 +27,10 @@ class Renderable {
         this._color = value;
     }
 
-    draw(modelTransform) {
+    draw() {
         const gl = Engine.Core.getGL();
         this.shader.activateShader(this.color);
-        this.shader.loadObjectTransform(modelTransform);
+        this.shader.loadObjectTransform(this.transform.getXform());
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }
 }

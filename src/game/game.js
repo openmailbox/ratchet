@@ -15,19 +15,15 @@ class Game {
 
         Engine.Core.clearCanvas([0.0, 0.8, 0.0, 1.0]);
 
-        const xform = glMatrix.mat4.create();
-        glMatrix.mat4.translate(xform, xform, glMatrix.vec3.fromValues(-0.25, 0.25, 0.0));
-        glMatrix.mat4.rotateZ(xform, xform, 0.2);
-        glMatrix.mat4.scale(xform, xform, glMatrix.vec3.fromValues(1.2, 1.2, 1.0));
+        this.whiteSq.transform.setPosition(-0.25, 0.25);
+        this.whiteSq.transform.setRotationRads(0.2);
+        this.whiteSq.transform.setSize(1.2, 1.2);
+        this.whiteSq.draw();
 
-        this.whiteSq.draw(xform);
-
-        glMatrix.mat4.identity(xform);
-        glMatrix.mat4.translate(xform, xform, glMatrix.vec3.fromValues(0.25, -0.25, 0.0));
-        glMatrix.mat4.rotateZ(xform, xform, -0.785);
-        glMatrix.mat4.scale(xform, xform, glMatrix.vec3.fromValues(0.4, 0.4, 1.0));
-
-        this.redSq.draw(xform);
+        this.redSq.transform.setPosition(0.25, -0.25);
+        this.redSq.transform.setRotationDegrees(45);
+        this.redSq.transform.setSize(0.4, 0.4);
+        this.redSq.draw();
 
         const gl = Engine.Core.getGL();
         gl.drawArrays(gl.TRIANGLE_STRIP, 0.0, 4.0);
