@@ -34,12 +34,25 @@ class SimpleShader {
         return this.compiledShader;
     }
 
-    _loadAndCompileShader(id, shaderType) {
-        let shaderText, shaderSource, compiledShader;
+    _loadAndCompileShader(filePath, shaderType) {
+        let shaderSource, compiledShader;
         let gl = Engine.Core.getGL();
 
-        shaderText = document.getElementById(id);
-        shaderSource = shaderText.firstChild.textContent;
+        const xmlReq = new XMLHttpRequest();
+        xmlReq.open('GET', filePath, false);
+
+        try {
+            xmlReq.send();
+        } catch (error) {
+            alert(`Failed to load shader: ${filePath}`);
+            return null;
+        }
+
+        shaderSource = xmlReq.responseText;
+        if (shaderSource === null) {
+            console.warn(`Failed to load shader ${filePath}`);
+            return null;
+        }
 
         compiledShader = gl.createShader(shaderType);
 
