@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body onload="new Game('canvas');">
+    <script type="x-shader/x-vertex" id="VertexShader">
+        attribute vec3 aSquareVertexPosition;
+        void main(void) {
+            gl_Position = vec4(aSquareVertexPosition, 1.0);
+        }
+    </script>
+
+    <script type="x-shader/x-fragment" id="FragmentShader">
+        void main(void) {
+            gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+        }
+    </script>
+
+    <script type="text/javascript" src="src/engine/core.js"></script>
+    <script type="text/javascript" src="src/engine/simple_shader.js"></script>
+    <script type="text/javascript" src="src/engine/vertex_buffer.js"></script>
+
+    <script type="text/javascript" src="src/game/game.js"></script>
+
+    <canvas id="canvas" width="640" height="480">
+        Your browser does not support HTML5 canvas.
+    </canvas>
+</body>
+
+</html>
