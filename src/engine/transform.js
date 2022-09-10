@@ -6,7 +6,7 @@ class Transform {
     constructor() {
         this.position = glMatrix.vec2.fromValues(0, 0);
         this.rotation = 0.0; // radians
-        this.scale = glMatrix.vec2.fromValues(1, 1);
+        this.scale    = glMatrix.vec2.fromValues(1, 1);
     }
 
     getXform() {

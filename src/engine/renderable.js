@@ -27,9 +27,9 @@ class Renderable {
         this._color = value;
     }
 
-    draw() {
+    draw(vpMatrix) {
         const gl = Engine.Core.getGL();
-        this.shader.activateShader(this.color);
+        this.shader.activateShader(this.color, vpMatrix);
         this.shader.loadObjectTransform(this.transform.getXform());
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }

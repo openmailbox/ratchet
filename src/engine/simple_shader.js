@@ -1,7 +1,8 @@
 class SimpleShader {
-    compiledShader = null;
-    modelTransform = null;
-    pixelColor     = null;
+    compiledShader    = null;
+    modelTransform    = null;
+    pixelColor        = null;
+    viewProjTransform = null;
 
     #shaderVertexPositionAttribute = null;
 
@@ -22,16 +23,19 @@ class SimpleShader {
         }
 
         this.#shaderVertexPositionAttribute = gl.getAttribLocation(this.compiledShader, "aSquareVertexPosition");
-        this.pixelColor = gl.getUniformLocation(this.compiledShader, "uPixelColor");
-        this.modelTransform = gl.getUniformLocation(this.compiledShader, "uModelTransform");
+
+        this.pixelColor        = gl.getUniformLocation(this.compiledShader, "uPixelColor");
+        this.modelTransform    = gl.getUniformLocation(this.compiledShader, "uModelTransform");
+        this.viewProjTransform = gl.getUniformLocation(this.compiledShader, "uViewProjTransform");
 
         gl.bindBuffer(gl.ARRAY_BUFFER, Engine.VertexBuffer.getGLVertexRef());
         gl.vertexAttribPointer(this.#shaderVertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
     }
 
-    activateShader(pixelColor) {
+    activateShader(pixelColor, vpMatrix) {
         const gl = Engine.Core.getGL();
         gl.useProgram(this.compiledShader);
+        gl.uniformMatrix4fv(this.viewProjTransform, false, vpMatrix);
         gl.enableVertexAttribArray(this.#shaderVertexPositionAttribute);
         gl.uniform4fv(this.pixelColor, pixelColor);
     }
