@@ -6,7 +6,11 @@ class Game {
     constructor(htmlCanvasID) {
         Engine.Core.initializeWebGL(htmlCanvasID);
 
-        const gl = Engine.Core.getGL();
+        this.camera = new Camera(
+            glMatrix.vec2.fromValues(20, 60), // center
+            20,                               // width
+            [20, 40, 600, 300]                // viewport(orgX, orgY, width, height)
+        );
 
         this.constColorShader = new SimpleShader("src/shaders/simple_vs.glsl", "src/shaders/simple_fs.glsl");
         this.blueSq           = new Renderable(this.constColorShader);
@@ -25,27 +29,9 @@ class Game {
 
         Engine.Core.clearCanvas([0.9, 0.9, 0.9, 1.0]);
 
-        // x, y, width, height
-        gl.viewport(20, 40, 600, 300);
-        gl.scissor(20, 40, 600, 300);
+        this.camera.setupViewProjection();
 
-        gl.enable(gl.SCISSOR_TEST);
-        Engine.Core.clearCanvas([0.8, 0.8, 0.8, 1.0]);
-        gl.disable(gl.SCISSOR_TEST);
-
-        const viewMatrix = glMatrix.mat4.create();
-        const projMatrix = glMatrix.mat4.create();
-        const vpMatrix   = glMatrix.mat4.create();
-
-        glMatrix.mat4.lookAt(viewMatrix,
-            [20, 60, 10], // camera
-            [20, 60, 0],  // look at
-            [0, 1, 0]);   // orientation
-
-        // dist-to-left, dist-right, bottom, top, z-near, z-far
-        glMatrix.mat4.ortho(projMatrix, -10, 10, -5, 5, 0, 1000)
-
-        glMatrix.mat4.multiply(vpMatrix, projMatrix, viewMatrix);
+        const vpMatrix = this.camera.vpMatrix;
 
         this.blueSq.transform.setPosition(20, 60);
         this.blueSq.transform.setRotationRads(0.2);
@@ -68,6 +54,7 @@ class Game {
         this.blSq.transform.setPosition(10, 55);
         this.blSq.draw(vpMatrix);
 
+        const gl = Engine.Core.getGL();
         gl.drawArrays(gl.TRIANGLE_STRIP, 0.0, 4.0);
     }
 }

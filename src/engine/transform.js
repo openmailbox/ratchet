@@ -1,7 +1,7 @@
 class Transform {
     position = null;
     rotation = null;
-    scale = null;
+    scale    = null;
 
     constructor() {
         this.position = glMatrix.vec2.fromValues(0, 0);
