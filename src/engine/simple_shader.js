@@ -1,5 +1,6 @@
 class SimpleShader {
     compiledShader = null;
+    modelTransform = null;
     pixelColor     = null;
 
     #shaderVertexPositionAttribute = null;
@@ -22,6 +23,7 @@ class SimpleShader {
 
         this.#shaderVertexPositionAttribute = gl.getAttribLocation(this.compiledShader, "aSquareVertexPosition");
         this.pixelColor = gl.getUniformLocation(this.compiledShader, "uPixelColor");
+        this.modelTransform = gl.getUniformLocation(this.compiledShader, "uModelTransform");
 
         gl.bindBuffer(gl.ARRAY_BUFFER, Engine.VertexBuffer.getGLVertexRef());
         gl.vertexAttribPointer(this.#shaderVertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
@@ -32,6 +34,11 @@ class SimpleShader {
         gl.useProgram(this.compiledShader);
         gl.enableVertexAttribArray(this.#shaderVertexPositionAttribute);
         gl.uniform4fv(this.pixelColor, pixelColor);
+    }
+
+    loadObjectTransform(modelTransform) {
+        const gl = Engine.Core.getGL();
+        gl.uniformMatrix4fv(this.modelTransform, false, modelTransform);
     }
 
     get shader() {
