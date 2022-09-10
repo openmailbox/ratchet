@@ -1,5 +1,7 @@
 class SimpleShader {
     compiledShader = null;
+    pixelColor     = null;
+
     #shaderVertexPositionAttribute = null;
 
     constructor(vertexShaderID, fragmentShaderID) {
@@ -19,15 +21,17 @@ class SimpleShader {
         }
 
         this.#shaderVertexPositionAttribute = gl.getAttribLocation(this.compiledShader, "aSquareVertexPosition");
+        this.pixelColor = gl.getUniformLocation(this.compiledShader, "uPixelColor");
 
         gl.bindBuffer(gl.ARRAY_BUFFER, Engine.VertexBuffer.getGLVertexRef());
         gl.vertexAttribPointer(this.#shaderVertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
     }
 
-    activateShader() {
+    activateShader(pixelColor) {
         const gl = Engine.Core.getGL();
         gl.useProgram(this.compiledShader);
         gl.enableVertexAttribArray(this.#shaderVertexPositionAttribute);
+        gl.uniform4fv(this.pixelColor, pixelColor);
     }
 
     get shader() {
