@@ -1,5 +1,7 @@
 import { Input } from './input.js'
 import { VertexBuffer } from './vertex_buffer.js';
+import { DefaultResources } from './resources/default_resources.js';
+import { GameLoop } from './game_loop.js';
 
 export class Core {
     static {
@@ -15,11 +17,15 @@ export class Core {
         return this._webGL;
     }
 
-    static initialize(htmlCanvasID) {
+    static initialize(htmlCanvasID, game) {
         this._webGL = _initializeWebGL(htmlCanvasID);
 
         Input.initialize();
         VertexBuffer.initialize();
+
+        DefaultResources.initialize(function() {
+            _startScene(game)
+        })
     }
 }
 
@@ -32,4 +38,9 @@ function _initializeWebGL(canvasID) {
     }
 
     return gl;
+}
+
+function _startScene(game) {
+    game.initialize.call(game);
+    GameLoop.start(game);
 }

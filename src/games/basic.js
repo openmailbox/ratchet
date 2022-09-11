@@ -1,8 +1,7 @@
 import * as Engine from '/src/engine/engine.js';
 
 export class BasicGame {
-    constructor(htmlCanvasID) {
-        Engine.Core.initialize(htmlCanvasID);
+    constructor() {
         this.initialize();
     }
 
@@ -29,7 +28,7 @@ export class BasicGame {
         );
 
         this.camera.bgColor   = [0.8, 0.8, 0.8, 1];
-        this.constColorShader = new Engine.SimpleShader("src/shaders/simple_vs.glsl", "src/shaders/simple_fs.glsl");
+        this.constColorShader = Engine.DefaultResources.ConstColorShader;
         this.whiteSq          = new Engine.Renderable(this.constColorShader);
         this.blueSq           = new Engine.Renderable(this.constColorShader);
         this.redSq            = new Engine.Renderable(this.constColorShader);
@@ -64,8 +63,6 @@ export class BasicGame {
         this.brSq.transform.setPosition(30, 55);
 
         this.blSq.transform.setPosition(10, 55);
-
-        Engine.GameLoop.start(this);
     }
 
     update() {

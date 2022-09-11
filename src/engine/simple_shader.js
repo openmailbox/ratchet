@@ -1,5 +1,6 @@
 import { Core } from './core/core.js';
 import { VertexBuffer } from './core/vertex_buffer.js';
+import { ResourceMap } from './core/resources/resource_map.js';
 
 export class SimpleShader {
     compiledShader    = null;
@@ -11,8 +12,8 @@ export class SimpleShader {
 
     constructor(vertexShaderID, fragmentShaderID) {
         const gl             = Core.getGL();
-        const fragmentShader = this._loadAndCompileShader(fragmentShaderID, gl.FRAGMENT_SHADER);
-        const vertexShader   = this._loadAndCompileShader(vertexShaderID, gl.VERTEX_SHADER);
+        const fragmentShader = this._compileShader(fragmentShaderID, gl.FRAGMENT_SHADER);
+        const vertexShader   = this._compileShader(vertexShaderID, gl.VERTEX_SHADER);
 
         this.compiledShader = gl.createProgram();
 
@@ -52,21 +53,12 @@ export class SimpleShader {
         return this.compiledShader;
     }
 
-    _loadAndCompileShader(filePath, shaderType) {
-        let shaderSource, compiledShader;
-        let gl = Core.getGL();
+    _compileShader(filePath, shaderType) {
+        let compiledShader;
 
-        const xmlReq = new XMLHttpRequest();
-        xmlReq.open('GET', filePath, false);
+        let gl           = Core.getGL();
+        let shaderSource = ResourceMap.retrieveAsset(filePath);
 
-        try {
-            xmlReq.send();
-        } catch (error) {
-            alert(`Failed to load shader: ${filePath}`);
-            return null;
-        }
-
-        shaderSource = xmlReq.responseText;
         if (shaderSource === null) {
             console.warn(`Failed to load shader ${filePath}`);
             return null;
