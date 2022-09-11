@@ -1,7 +1,6 @@
 class Game {
     constructor(htmlCanvasID) {
-        Engine.Core.initializeWebGL(htmlCanvasID);
-
+        Engine.Core.initialize(htmlCanvasID);
         this.initialize();
     }
 
@@ -72,17 +71,24 @@ class Game {
         const redXform   = this.redSq.transform;
         const deltaX     = 0.05;
 
-        if (whiteXform.x > 30) {
-            whiteXform.setPosition(10, 60);
+        if (Engine.Input.isKeyPressed(Engine.Input.Keys.Right)) {
+            if (whiteXform.x > 30) {
+                whiteXform.setPosition(10, 60);
+            }
+
+            whiteXform.setPosition(whiteXform.x + deltaX, whiteXform.y);
         }
 
-        whiteXform.setPosition(whiteXform.x + deltaX, whiteXform.y);
-        whiteXform.setRotationDegrees(whiteXform.getRotationDegrees() + 1);
-
-        if (redXform.width > 5) {
-            redXform.setSize(2, 2);
+        if (Engine.Input.isKeyClicked(Engine.Input.Keys.Up)) {
+            whiteXform.setRotationDegrees(whiteXform.getRotationDegrees() + 1);
         }
 
-        redXform.setSize(redXform.width + deltaX, redXform.height + deltaX);
+        if (Engine.Input.isKeyPressed(Engine.Input.Keys.Down)) {
+            if (redXform.width > 5) {
+                redXform.setSize(2, 2);
+            }
+
+            redXform.setSize(redXform.width + deltaX, redXform.height + deltaX);
+        }
     }
 }

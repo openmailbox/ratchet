@@ -28,6 +28,7 @@ Engine.GameLoop = (function() {
         lagTime += elapsedTime;
 
         while ((lagTime >= MPF) && isLoopRunning) {
+            Engine.Input.update();
             this.update();
             lagTime -= MPF;
         }

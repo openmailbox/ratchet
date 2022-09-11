@@ -8,22 +8,25 @@ Engine.Core = (function() {
         webGL.clear(webGL.COLOR_BUFFER_BIT);
     };
 
-    const initializeWebGL = function(canvasID) {
+    const initialize = function(htmlCanvasID) {
+        _initializeWebGL(htmlCanvasID);
+        Engine.VertexBuffer.initialize();
+        Engine.Input.initialize();
+    };
+
+    const _initializeWebGL = function(canvasID) {
         let canvas = document.getElementById(canvasID);
 
         webGL = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
 
         if (webGL === null) {
             document.write("<br><b>WebGL is not supported.</b></br>")
-            return;
         }
-
-        Engine.VertexBuffer.initialize();
     };
 
     return {
         clearCanvas: clearCanvas,
         getGL: function() { return webGL; },
-        initializeWebGL: initializeWebGL
+        initialize: initialize
     }
 })();
