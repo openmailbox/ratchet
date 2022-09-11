@@ -1,7 +1,10 @@
+import { Core } from './core/core.js';
+import { Transform } from './transform.js';
+
 /**
  * @property {SimpleShader} shader
  */
-class Renderable {
+export class Renderable {
     color     = [1, 1, 1, 1];
     shader    = null;
     transform = new Transform();
@@ -29,7 +32,7 @@ class Renderable {
     }
 
     draw(vpMatrix) {
-        const gl = Engine.Core.getGL();
+        const gl = Core.getGL();
         this.shader.activateShader(this.color, vpMatrix);
         this.shader.loadObjectTransform(this.transform.getXform());
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);

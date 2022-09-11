@@ -1,5 +1,5 @@
-Engine.Input = (function() {
-    const Keys = {
+export class Input {
+    static Keys = {
         Left:  37,
         Up:    38,
         Right: 39,
@@ -32,43 +32,45 @@ Engine.Input = (function() {
         W: 87,
 
         LastKeyCode: 222
-    };
+    }
 
-    let keyPreviousState = [];
-    let isKeyPressed     = [];
-    let isKeyClicked     = [];
+    static {
+        this.keyPreviousState = [];
+        this._isKeyPressed    = [];
+        this._isKeyClicked    = [];
+    }
 
-    const initialize = function() {
-        for (let i = 0; i < Keys.LastKeyCode; i++) {
-            isKeyPressed[i]     = false;
-            keyPreviousState[i] = false;
-            isKeyClicked[i]     = false;
+    static initialize() {
+        for (let i = 0; i < this.Keys.LastKeyCode; i++) {
+            this._isKeyPressed[i]     = false;
+            this.keyPreviousState[i] = false;
+            this._isKeyClicked[i]     = false;
         }
 
-        window.addEventListener('keyup', _onKeyUp);
-        window.addEventListener('keydown', _onKeyDown);
-    };
+        window.addEventListener('keydown', _onKeyDown.bind(this));
+        window.addEventListener('keyup', _onKeyUp.bind(this));
+    }
 
-    const update = function() {
-        for (let i = 0; i < Keys.LastKeyCode; i++) {
-            isKeyClicked[i]     = (!keyPreviousState[i]) && isKeyPressed[i];
-            keyPreviousState[i] = isKeyPressed[i];
+    static isKeyClicked(keyCode) {
+        return this._isKeyClicked[keyCode];
+    }
+
+    static isKeyPressed(keyCode) {
+        return this._isKeyPressed[keyCode];
+    }
+
+    static update() {
+        for (let i = 0; i < this.Keys.LastKeyCode; i++) {
+            this._isKeyClicked[i]    = (!this.keyPreviousState[i]) && this._isKeyPressed[i];
+            this.keyPreviousState[i] = this._isKeyPressed[i];
         }
-    };
+    }
+}
 
-    const _onKeyDown = function(event) {
-        isKeyPressed[event.keyCode] = true;
-    };
+function _onKeyDown(event) {
+    this._isKeyPressed[event.keyCode] = true;
+};
 
-    const _onKeyUp = function(event) {
-        isKeyPressed[event.keyCode] = false;
-    };
-
-    return {
-        initialize: initialize,
-        isKeyPressed: (keyCode) => { return isKeyPressed[keyCode]; },
-        isKeyClicked: (keyCode) => { return isKeyClicked[keyCode]; },
-        Keys: Keys,
-        update: update
-    };
-})();
+function _onKeyUp(event) {
+    this._isKeyPressed[event.keyCode] = false;
+};

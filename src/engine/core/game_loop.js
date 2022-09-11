@@ -1,42 +1,40 @@
-Engine.GameLoop = (function() {
-    const FPS = 60;
-    const MPF = 1000 / FPS;
+import { Input } from './input.js'
 
-    let previousTime, lagTime, currentTime, elapsedTime;
+const FPS = 60;
+const MPF = 1000 / FPS;
 
-    let isLoopRunning = false;
-    let game          = null;
+let previousTime, lagTime, currentTime, elapsedTime;
 
-    const start = function(newGame) {
+let isLoopRunning = false;
+let game          = null;
+
+export class GameLoop {
+    static start(newGame) {
         game          = newGame;
         previousTime  = Date.now();
         lagTime       = 0.0
         isLoopRunning = true;
 
         requestAnimationFrame(function() { _runLoop.call(game) });
-    };
+    }
+}
 
-    const _runLoop = function() {
-        if (isLoopRunning) {
-            requestAnimationFrame(function() { _runLoop.call(game) });
-        }
+function _runLoop() {
+    if (isLoopRunning) {
+        requestAnimationFrame(function () { _runLoop.call(game) });
+    }
 
-        currentTime  = Date.now();
-        elapsedTime  = currentTime - previousTime;
-        previousTime = currentTime;
+    currentTime = Date.now();
+    elapsedTime = currentTime - previousTime;
+    previousTime = currentTime;
 
-        lagTime += elapsedTime;
+    lagTime += elapsedTime;
 
-        while ((lagTime >= MPF) && isLoopRunning) {
-            Engine.Input.update();
-            this.update();
-            lagTime -= MPF;
-        }
+    while ((lagTime >= MPF) && isLoopRunning) {
+        Input.update();
+        this.update();
+        lagTime -= MPF;
+    }
 
-        this.draw();
-    };
-
-    return {
-        start: start
-    };
-})();
+    this.draw();
+}

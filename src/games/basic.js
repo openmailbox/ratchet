@@ -1,4 +1,6 @@
-class Game {
+import * as Engine from '/src/engine/engine.js';
+
+export class BasicGame {
     constructor(htmlCanvasID) {
         Engine.Core.initialize(htmlCanvasID);
         this.initialize();
@@ -20,21 +22,21 @@ class Game {
     }
 
     initialize() {
-        this.camera = new Camera(
+        this.camera = new Engine.Camera(
             glMatrix.vec2.fromValues(20, 60), // center
             20,                               // width
             [20, 40, 600, 300]                // viewport(orgX, orgY, width, height)
         );
 
         this.camera.bgColor   = [0.8, 0.8, 0.8, 1];
-        this.constColorShader = new SimpleShader("src/shaders/simple_vs.glsl", "src/shaders/simple_fs.glsl");
-        this.whiteSq          = new Renderable(this.constColorShader);
-        this.blueSq           = new Renderable(this.constColorShader);
-        this.redSq            = new Renderable(this.constColorShader);
-        this.tlSq             = new Renderable(this.constColorShader);
-        this.trSq             = new Renderable(this.constColorShader);
-        this.brSq             = new Renderable(this.constColorShader);
-        this.blSq             = new Renderable(this.constColorShader);
+        this.constColorShader = new Engine.SimpleShader("src/shaders/simple_vs.glsl", "src/shaders/simple_fs.glsl");
+        this.whiteSq          = new Engine.Renderable(this.constColorShader);
+        this.blueSq           = new Engine.Renderable(this.constColorShader);
+        this.redSq            = new Engine.Renderable(this.constColorShader);
+        this.tlSq             = new Engine.Renderable(this.constColorShader);
+        this.trSq             = new Engine.Renderable(this.constColorShader);
+        this.brSq             = new Engine.Renderable(this.constColorShader);
+        this.blSq             = new Engine.Renderable(this.constColorShader);
 
         this.whiteSq.color = [1, 1, 1, 1];
         this.blueSq.color  = [0.25, 0.25, 0.95, 1];

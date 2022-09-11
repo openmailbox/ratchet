@@ -4,24 +4,15 @@
 <head>
 </head>
 
-<body onload="new Game('canvas');">
+<body>
     <!-- https://glmatrix.net/ -->
     <script type="text/javascript" src="vendor/gl-matrix-3.4.1/dist/gl-matrix.js"></script>
-
-    <script type="text/javascript" src="src/engine/core/core.js"></script>
-    <script type="text/javascript" src="src/engine/core/game_loop.js"></script>
-    <script type="text/javascript" src="src/engine/core/input.js"></script>
-    <script type="text/javascript" src="src/engine/core/vertex_buffer.js"></script>
-    <script type="text/javascript" src="src/engine/simple_shader.js"></script>
-    <script type="text/javascript" src="src/engine/renderable.js"></script>
-    <script type="text/javascript" src="src/engine/transform.js"></script>
-    <script type="text/javascript" src="src/engine/camera.js"></script>
-
-    <script type="text/javascript" src="src/game/game.js"></script>
 
     <canvas id="canvas" width="640" height="480">
         Your browser does not support HTML5 canvas.
     </canvas>
+
+    <script type="module" src="src/main.js"></script>
 </body>
 
 </html>

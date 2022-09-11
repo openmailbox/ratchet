@@ -1,4 +1,4 @@
-class Transform {
+export class Transform {
     position = [0.0, 0.0];
     rotation = 0.0;
     scale    = [1.0, 1.0];

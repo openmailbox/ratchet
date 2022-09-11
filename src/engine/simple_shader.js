@@ -1,4 +1,7 @@
-class SimpleShader {
+import { Core } from './core/core.js';
+import { VertexBuffer } from './core/vertex_buffer.js';
+
+export class SimpleShader {
     compiledShader    = null;
     modelTransform    = null;
     pixelColor        = null;
@@ -7,7 +10,7 @@ class SimpleShader {
     #shaderVertexPositionAttribute = null;
 
     constructor(vertexShaderID, fragmentShaderID) {
-        const gl             = Engine.Core.getGL();
+        const gl             = Core.getGL();
         const fragmentShader = this._loadAndCompileShader(fragmentShaderID, gl.FRAGMENT_SHADER);
         const vertexShader   = this._loadAndCompileShader(vertexShaderID, gl.VERTEX_SHADER);
 
@@ -28,12 +31,12 @@ class SimpleShader {
         this.modelTransform    = gl.getUniformLocation(this.compiledShader, "uModelTransform");
         this.viewProjTransform = gl.getUniformLocation(this.compiledShader, "uViewProjTransform");
 
-        gl.bindBuffer(gl.ARRAY_BUFFER, Engine.VertexBuffer.getGLVertexRef());
+        gl.bindBuffer(gl.ARRAY_BUFFER, VertexBuffer.getGLVertexRef());
         gl.vertexAttribPointer(this.#shaderVertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
     }
 
     activateShader(pixelColor, vpMatrix) {
-        const gl = Engine.Core.getGL();
+        const gl = Core.getGL();
         gl.useProgram(this.compiledShader);
         gl.uniformMatrix4fv(this.viewProjTransform, false, vpMatrix);
         gl.enableVertexAttribArray(this.#shaderVertexPositionAttribute);
@@ -41,7 +44,7 @@ class SimpleShader {
     }
 
     loadObjectTransform(modelTransform) {
-        const gl = Engine.Core.getGL();
+        const gl = Core.getGL();
         gl.uniformMatrix4fv(this.modelTransform, false, modelTransform);
     }
 
@@ -51,7 +54,7 @@ class SimpleShader {
 
     _loadAndCompileShader(filePath, shaderType) {
         let shaderSource, compiledShader;
-        let gl = Engine.Core.getGL();
+        let gl = Core.getGL();
 
         const xmlReq = new XMLHttpRequest();
         xmlReq.open('GET', filePath, false);

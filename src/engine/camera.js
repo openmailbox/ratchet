@@ -1,4 +1,6 @@
-class Camera {
+import { Core } from './core/core.js';
+
+export class Camera {
     bgColor  = null;
     viewport = null;
     vpMatrix = null;
@@ -47,7 +49,7 @@ class Camera {
     }
 
     setupViewProjection() {
-        const gl           = Engine.Core.getGL();
+        const gl           = Core.getGL();
         const halfWCWidth  = 0.5 * this._wcWidth;
         const halfWCHeight = halfWCWidth * this.viewport[3] / this.viewport[2];
 

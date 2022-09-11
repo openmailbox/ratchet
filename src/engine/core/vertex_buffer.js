@@ -1,24 +1,27 @@
-Engine.VertexBuffer = (function() {
-    const verticesOfSquare = [
-        0.5, 0.5, 0.0,
-        -0.5, 0.5, 0.0,
-        0.5, -0.5, 0.0,
-        -0.5, -0.5, 0.0
-    ];
+import { Core } from './core.js'
 
-    let squareVertexBuffer = null;
+export class VertexBuffer {
+    static {
+        this._verticesOfSquare = [
+            0.5, 0.5, 0.0,
+            -0.5, 0.5, 0.0,
+            0.5, -0.5, 0.0,
+            -0.5, -0.5, 0.0
+        ];
 
-    const initialize = function() {
-        const gl = Engine.Core.getGL();
+        this._squareVertexBuffer = null;
+    }
 
-        squareVertexBuffer = gl.createBuffer();
+    static getGLVertexRef() {
+        return this._squareVertexBuffer;
+    }
 
-        gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexBuffer);
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(verticesOfSquare), gl.STATIC_DRAW);
-    };
+    static initialize() {
+        const gl = Core.getGL();
 
-    return {
-        getGLVertexRef: function() { return squareVertexBuffer; },
-        initialize: initialize
-    };
-})();
+        this._squareVertexBuffer = gl.createBuffer();
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, this._squareVertexBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this._verticesOfSquare), gl.STATIC_DRAW);
+    }
+}
