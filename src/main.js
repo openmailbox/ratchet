@@ -1,4 +1,4 @@
-import { BasicGame } from "./games/basic.js"
+import { BasicGame } from "./game/basic.js"
 import { Core } from './engine/engine.js'
 
 document.body.onload = function() {

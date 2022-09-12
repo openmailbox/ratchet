@@ -1,4 +1,5 @@
-import { Input } from './input.js'
+import { Input } from './input.js';
+import { ResourceMap } from './resources/resource_map.js';
 
 const FPS = 60;
 const MPF = 1000 / FPS;
@@ -10,12 +11,12 @@ let game          = null;
 
 export class GameLoop {
     static start(newGame) {
-        game          = newGame;
-        previousTime  = Date.now();
-        lagTime       = 0.0
-        isLoopRunning = true;
+        game = newGame;
 
-        requestAnimationFrame(function() { _runLoop.call(game) });
+        ResourceMap.setLoadCompleteCallback(function() {
+            game.initialize();
+            _startLoop();
+        });
     }
 }
 
@@ -37,4 +38,12 @@ function _runLoop() {
     }
 
     this.draw();
+}
+
+function _startLoop() {
+    previousTime  = Date.now();
+    lagTime       = 0.0
+    isLoopRunning = true;
+
+    requestAnimationFrame(function() { _runLoop.call(game) });
 }

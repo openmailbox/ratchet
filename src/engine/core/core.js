@@ -41,6 +41,6 @@ function _initializeWebGL(canvasID) {
 }
 
 function _startScene(game) {
-    game.initialize.call(game);
+    game.loadScene.call(game);
     GameLoop.start(game);
 }

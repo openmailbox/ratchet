@@ -9,8 +9,8 @@ export class DefaultResources {
     static ConstColorShader = null;
 
     static initialize(callbackFunction) {
-        TextFileLoader.loadTextFile(this.SimpleVS, TextFileLoader.TextFileType.text, callbackFunction);
-        TextFileLoader.loadTextFile(this.SimpleFS, TextFileLoader.TextFileType.text, callbackFunction);
+        TextFileLoader.loadTextFile(this.SimpleVS, TextFileLoader.TextFileType.text);
+        TextFileLoader.loadTextFile(this.SimpleFS, TextFileLoader.TextFileType.text);
 
         ResourceMap.setLoadCompleteCallback(function() {
             this._createShaders(callbackFunction);
